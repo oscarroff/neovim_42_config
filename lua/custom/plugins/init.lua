@@ -6,25 +6,13 @@ vim.g.user = "thblack-"
 vim.g.mail = "thblack-@student.hive.fi"
 return {
 	{
-		"Diogo-ss/42-header.nvim",
-		cmd = { "Stdheader" },
-		keys = { "<F1>" },
-		opts = {
-			default_map = true, -- Default mapping <F1> in normal mode.
-			auto_update = true, -- Update header when saving.
-			user = "username", -- Your user.
-			mail = "your@email.com", -- Your mail.
-			-- add other options.
-		},
-		config = function(_, opts)
-			require("42header").setup(opts)
-		end,
-	},
-	{
 		"epheien/termdbg",
 	},
 	{
 		"mfussenegger/nvim-dap",
+	},
+	{
+		require("custom.plugins.header42"),
 	},
 	{
 		require("custom.plugins.cformat42"),
@@ -34,5 +22,8 @@ return {
 	},
 	{
 		require("custom.plugins.csvview"),
+	},
+	{
+		require("custom.plugins.norminette42"),
 	},
 }

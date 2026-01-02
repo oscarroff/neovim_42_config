@@ -63,10 +63,13 @@ vim.keymap.set("n", "<C-t>", function()
 end, { desc = "Open terminal on right from Neo-tree selection" })
 
 -- Show manual
-vim.keymap.set("n", "<Leader>m", "K", { desc = "Open terminal [M]anual page" })
+vim.keymap.set("n", "<Leader>m", "K", { desc = "Open terminal [m]anual page" })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>l", vim.diagnostic.setloclist, { desc = "Open diagnostic quickfix [L]ist" })
+vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "Open [d]iagnostic quickfix [l]ist" })
+vim.keymap.set("n", "<leader>dn", function()
+	require("norminette").toggle()
+end, { desc = "Toggle [d]iagnostic [n]orminette view" })
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
@@ -84,7 +87,7 @@ vim.keymap.set(
 	"n",
 	"<Leader>b",
 	"<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
-	{ desc = "Open telescope [B]uffers" }
+	{ desc = "Open telescope [b]uffers" }
 )
 
 --vim.api.nvim_set_keymap("n", "<F2>", ":CFormat42<CR>", { noremap = true, silent = true })

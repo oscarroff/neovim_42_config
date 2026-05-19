@@ -90,19 +90,6 @@ vim.keymap.set(
 	{ desc = "Open telescope [b]uffers" }
 )
 
---vim.api.nvim_set_keymap("n", "<F2>", ":CFormat42<CR>", { noremap = true, silent = true })
---[[
-vim.keymap.set({ "n", "v" }, "<leader>f", function()
-	-- Format file based on filetype
-	-- ft = current FILETYPE
-	local ft = vim.bo.filetype
-	if ft == "c" or ft == "cpp" or ft == "h" or ft == "hpp" then
-		vim.print("Formatted with CFormat42")
-		vim.cmd("CFormat42")
-	else
-		vim.print("Formatted with Conform")
-		require("conform").format({ async = true, lsp_fallback = true })
-	end
-end, { desc = "[F]ormat buffer" })
-]]
---
+-- In terminal mode, Alt-hjkl behave like window navigatio-- terminal: jk/kj -> go back to previous window
+vim.keymap.set("t", "jk", [[<C-\><C-n><C-w>p]], { desc = "Terminal: previous window" })
+vim.keymap.set("t", "kj", [[<C-\><C-n><C-w>p]], { desc = "Terminal: previous window" })

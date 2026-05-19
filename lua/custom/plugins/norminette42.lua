@@ -5,7 +5,7 @@ return {
 		norminette.setup({
 			runOnSave = false,
 			maxErrorsToShow = 5,
-			active = true,
+			active = false,
 		})
 		-- Track state separately
 		local is_active = true

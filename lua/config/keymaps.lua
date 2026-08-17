@@ -15,14 +15,6 @@ vim.keymap.set("i", "kj", "<Esc>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "qq", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", ";;", "<cmd>nohlsearch<CR>")
---vim.keymap.set("v", "§", "q")
---vim.keymap.set("n", "§", "q")
---vim.keymap.set("n", "q", "")
---vim.keymap.set("v", "q", "")
--- vim.keymap.set("v", "jk", "<Esc>")
--- vim.keymap.set("n", "jk", "<Esc>")
--- vim.keymap.set("v", "kj", "<Esc>")
--- vim.keymap.set("n", "kj", "<Esc>")
 
 vim.keymap.set("n", "<C-t>", function()
 	local manager = require("neo-tree.sources.manager")
@@ -40,7 +32,7 @@ vim.keymap.set("n", "<C-t>", function()
 
 	-- Save current window (Neo-tree), and move to next window (main buffer)
 	local current_win = vim.api.nvim_get_current_win()
-	vim.cmd("wincmd l") -- or "wincmd w" to go to next window
+	vim.cmd("wincmd l")
 	local target_win = vim.api.nvim_get_current_win()
 
 	if current_win == target_win then
@@ -90,6 +82,66 @@ vim.keymap.set(
 	{ desc = "Open telescope [b]uffers" }
 )
 
--- In terminal mode, Alt-hjkl behave like window navigatio-- terminal: jk/kj -> go back to previous window
+-- terminal: jk/kj -> go back to previous window
 vim.keymap.set("t", "jk", [[<C-\><C-n><C-w>p]], { desc = "Terminal: previous window" })
 vim.keymap.set("t", "kj", [[<C-\><C-n><C-w>p]], { desc = "Terminal: previous window" })
+
+-- Open URL under cursor with system browser
+vim.keymap.set("n", "gx", function()
+	local url = vim.fn.expand("<cfile>")
+	if url:match("^https?://") then
+		local open_cmd
+		if vim.fn.has("macunix") == 1 then
+			open_cmd = "open"
+		elseif vim.fn.has("unix") == 1 then
+			open_cmd = "xdg-open"
+		elseif vim.fn.has("win32") == 1 then
+			open_cmd = "start"
+		end
+		if open_cmd then
+			vim.fn.jobstart({ open_cmd, url }, { detach = true })
+			print("Opening: " .. url)
+		else
+			print("No suitable open command found for your system.")
+		end
+	else
+		print("Not a valid URL: " .. url)
+	end
+end, { desc = "Open URL under cursor with system handler" })
+
+-- Terminal toggle (bottom split)
+local term_bufnr = nil
+
+local function term_bottom_toggle(height)
+	height = height or 8
+
+	if term_bufnr and vim.api.nvim_buf_is_valid(term_bufnr) then
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_get_buf(win) == term_bufnr then
+				vim.api.nvim_set_current_win(win)
+				vim.cmd("startinsert")
+				return
+			end
+		end
+		vim.cmd(("botright %dsplit"):format(height))
+		vim.api.nvim_win_set_buf(0, term_bufnr)
+		vim.cmd("startinsert")
+		return
+	end
+
+	vim.cmd(("botright %dsplit"):format(height))
+	vim.cmd("terminal")
+	term_bufnr = vim.api.nvim_get_current_buf()
+	vim.cmd("startinsert")
+end
+
+vim.keymap.set("n", "<leader>z", function()
+	term_bottom_toggle(8)
+end, { desc = "Terminal (toggle, bottom split)" })
+
+-- Filetype extensions
+vim.filetype.add({
+	extension = {
+		tpp = "cpp",
+	},
+})

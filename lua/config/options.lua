@@ -59,7 +59,6 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
---vim.opt.scrolloff = 999
 
 -- Ask confirmations. See `:help 'confirm'`
 vim.opt.confirm = true

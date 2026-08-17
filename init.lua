@@ -803,3 +803,9 @@ end
 vim.keymap.set("n", "<leader>z", function()
 	term_bottom_toggle(8)
 end, { desc = "Terminal (toggle, bottom split)" })
+
+vim.filetype.add({
+	extension = {
+		tpp = "cpp",
+	},
+})

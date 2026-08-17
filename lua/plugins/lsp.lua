@@ -129,11 +129,15 @@ return {
 						},
 					},
 				},
+				ts_ls = {},
+				tailwindcss = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua",
+				"prettier",
+				"eslint-lsp",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -177,6 +181,13 @@ return {
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescriptreact = { "prettier" },
+				css = { "prettier" },
+				html = { "prettier" },
+				json = { "prettier" },
 			},
 		},
 	},

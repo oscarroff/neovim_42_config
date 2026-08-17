@@ -1,0 +1,10 @@
+# Lazy package manager lock file
+lazy-lock.json
+
+# OS files
+.DS_Store
+
+# Editor swap/backup files
+*~
+*.swp
+*.swo
